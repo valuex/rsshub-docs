@@ -2,7 +2,10 @@
 
 ## 创建命名空间
 
+### to do: 创建域名文件夹domain_dir 
 制作新的 RSS 路由的第一步是创建命名空间。命名空间原则上应该与你制作 RSS 源的主要网站的二级域名**相同**。例如，如果你正在为 [https://github.com/DIYgod/RSSHub/issues](https://github.com/DIYgod/RSSHub/issues) 制作 RSS 源，第二级域名是 `github`。因此，你应该在 `lib/routes` 下创建名为 `github` 的文件夹，作为你的 RSS 路由的命名空间。
+
+
 
 :::tip
 
@@ -10,16 +13,20 @@
 
 :::
 
-一旦你为 RSS 路由创建了命名空间，下一步就是创建文件 `namespace.ts` 来定义命名空间。
 
-文件应该通过 namespace 返回一个符合 Namespace 类型的对象。Namespace 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts)
+### to do： 创建`namespace.ts`  文件 
+一旦你为 RSS 路由创建了命名空间，下一步就是在**domain_dir**目录下创建文件 `namespace.ts` 来定义命名空间。
+
+
+文件`domain_dir/namespace.ts` 应该通过 namespace 返回一个符合 Namespace 类型的对象。
+Namespace 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts)  (需要什么操作???)
 
 - name：供人类阅读的命名空间的名称，它会被用作文档的标题
 - url：对应网站的不包含 protocol 的网址
 - description：可选，对使用此命名空间用户的提示和额外说明，它会被插入到文档中
 - zh, zh-TW, ja: 可选，英文以外的多语言支持，它会被用作生成多语言文档
 
-一个完整的例子是：
+一个完整的例子（文件 `domain_dir/namespace.ts` 中的内容）是：
 
 ```ts
 import type { Namespace } from '@/types';
@@ -48,7 +55,9 @@ GitHub provides some official RSS feeds:
 
 一旦你为路由创建了命名空间，下一步创建一个路由文件注册路由。
 
-例如，如果你为 [GitHub 仓库 Issues](/zh/routes/programming#repo-issues) 制作 RSS 源，并且假设你希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，你可以在 `/lib/routes/github/issue.ts` 中注册你的新 RSS 路由，文件需要通过 route 返回一个符合 Route 类型的对象。Route 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts)
+例如，如果你为 [GitHub 仓库 Issues](/zh/routes/programming#repo-issues) 制作 RSS 源，并且假设你希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，你可以在 `/lib/routes/github/issue.ts` 中**注册**你的新 RSS 路由，文件需要通过 route 返回一个符合 Route 类型的对象。  (todo: 创建`/lib/routes/domain_dir/issue.ts`文件）
+
+Route 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts)   ？(需要干什么？？)
 
 - path: 路由路径，使用 [Hono 路由](https://hono.dev/api/routing) 语法
 - name: 供人类阅读的路由名称，它会被用作文档的标题
@@ -62,7 +71,7 @@ GitHub provides some official RSS feeds:
 - radar: 可以帮助用户在使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 或其他兼容其格式的软件时订阅你的新 RSS 路由，我们将在后面的部分更多介绍
 - handler: 路由的处理函数，我们将在后面的部分更多介绍
 
-一个完整例子是：
+一个完整例子（`/lib/routes/domain_dir/issue.ts`中的内容）是：
 
 ```ts
 import { Route } from '@/types';
@@ -98,7 +107,7 @@ export const route: Route = {
 
 在[创建路由](#创建路由)中，我们提到路由信息包含一个 radar 字段来记录 RSSHub Radar 规则。
 
-下面以 `GitHub 仓库 Issues` 的 RSS 规则为例。代码如下所示：
+下面以 `GitHub 仓库 Issues` 的 RSS 规则为例。`/lib/routes/domain_dir/issue.ts`文件中相应代码如下所示： 
 
 ```ts{5-8}
 import { Route } from '@/types';
